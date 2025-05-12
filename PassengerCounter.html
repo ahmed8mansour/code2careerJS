@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subway Passenger Counter</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .counter {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .count {
+            font-size: 48px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #save-el {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="counter">
+        <h1>Subway Passenger Counter</h1>
+        <div class="count" id="count-el">0</div>
+        <button onclick="increment()">Increment</button>
+        <button onclick="save()">Save</button>
+        <p id="save-el">Previous Entries: </p>
+    </div>
+
+    <script>
+        let count = 0;
+        let saveEl = document.getElementById("save-el");
+        let countEl = document.getElementById("count-el");
+
+        function increment() {
+            count += 1;
+            countEl.textContent = count;
+        }
+
+        function save() {
+            let countStr = count + " - ";
+            saveEl.textContent += countStr;
+            count = 0;
+            countEl.textContent = count;
+        }
+    </script>
+</body>
+</html>

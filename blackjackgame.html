@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Casino Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #2e2e2e;
+            color: white;
+        }
+        .game {
+            text-align: center;
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ff6347;
+            color: white;
+        }
+        button:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <div class="game">
+        <h1>Blackjack Casino Game</h1>
+        <p id="message-el">Press "Start Game" to play!</p>
+        <p id="player-el">Player: </p>
+        <p id="dealer-el">Dealer: </p>
+        <button onclick="startGame()">Start Game</button>
+        <button onclick="hit()">Hit</button>
+        <button onclick="stand()">Stand</button>
+    </div>
+
+    <script>
+        let player = [];
+        let dealer = [];
+        let messageEl = document.getElementById("message-el");
+        let playerEl = document.getElementById("player-el");
+        let dealerEl = document.getElementById("dealer-el");
+
+        function getRandomCard() {
+            return Math.floor(Math.random() * 11) + 1;
+        }
+
+        function startGame() {
+            player = [getRandomCard(), getRandomCard()];
+            dealer = [getRandomCard(), getRandomCard()];
+            updateGame();
+        }
+
+        function hit() {
+            player.push(getRandomCard());
+            updateGame();
+            if (calculateSum(player) > 21) {
+                messageEl.textContent = "Bust! You lose.";
+            }
+        }
+
+        function stand() {
+            while (calculateSum(dealer) < 17) {
+                dealer.push(getRandomCard());
+            }
+            updateGame();
+            checkWinner();
+        }
+
+        function calculateSum(cards) {
+            return cards.reduce((a, b) => a + b, 0);
+        }
+
+        function updateGame() {
+            playerEl.textContent = "Player: " + player.join(" - ") + " (Sum: " + calculateSum(player) + ")";
+            dealerEl.textContent = "Dealer: " + dealer.join(" - ") + " (Sum: " + calculateSum(dealer) + ")";
+        }
+
+        function checkWinner() {
+            let playerSum = calculateSum(player);
+            let dealerSum = calculateSum(dealer);
+            if (playerSum > 21) {
+                messageEl.textContent = "Bust! You lose.";
+            } else if (dealerSum > 21 || playerSum > dealerSum) {
+                messageEl.textContent = "You win!";
+            } else if (playerSum < dealerSum) {
+                messageEl.textContent = "You lose.";
+            } else {
+                messageEl.textContent = "It's a tie.";
+            }
+        }
+    </script>
+</body>
+</html>
